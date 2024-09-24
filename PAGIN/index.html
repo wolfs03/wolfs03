@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Aviones</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav>
+        <h1>Tienda de Aviones</h1>
+        <ul>
+            <li><a href="#home">Inicio</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Encabezado -->
+    <header id="home">
+        <h2>Encuentra el avión perfecto para ti</h2>
+        <img src="avion-principal.jpg" alt="Avión Principal" class="main-image">
+    </header>
+
+    <!-- Catálogo de Aviones -->
+    <section id="catalogo">
+        <h3>Nuestros Aviones</h3>
+        <div class="avion-item">
+            <img src="avion1.jpg" alt="Avión 1">
+            <h4>Avión Jet Modelo A</h4>
+            <p>Este jet ofrece lujo y velocidad.</p>
+            <button class="comprar-btn" onclick="comprar('Avión Jet Modelo A')">Comprar</button>
+        </div>
+        <div class="avion-item">
+            <img src="avion2.jpg" alt="Avión 2">
+            <h4>Avión Comercial Modelo B</h4>
+            <p>Perfecto para vuelos comerciales de largo alcance.</p>
+            <button class="comprar-btn" onclick="comprar('Avión Comercial Modelo B')">Comprar</button>
+        </div>
+        <!-- Añadir más aviones aquí -->
+    </section>
+
+    <!-- Contacto -->
+    <footer id="contacto">
+        <h3>Contacto</h3>
+        <p>Email: ventas@tiendadeaviones.com</p>
+        <p>Teléfono: +123-456-7890</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
