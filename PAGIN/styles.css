@@ -92,3 +92,9 @@ footer {
 footer p {
     margin: 5px;
 }
+
+#total {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}

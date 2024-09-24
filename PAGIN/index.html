@@ -14,6 +14,7 @@
             <li><a href="#home">Inicio</a></li>
             <li><a href="#catalogo">Catálogo</a></li>
             <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#carrito">Carrito (<span id="cart-count">0</span>)</a></li>
         </ul>
     </nav>
 
@@ -27,27 +28,139 @@
     <section id="catalogo">
         <h3>Nuestros Aviones</h3>
         <div class="avion-item">
-            <img src="avion1.jpg" alt="Avión 1">
+            <a href="https://www.ejemplo.com/avion-jet-modelo-a" target="_blank">
+                <img src="avion1.jpg" alt="Avión Jet Modelo A">
+            </a>
             <h4>Avión Jet Modelo A</h4>
             <p>Este jet ofrece lujo y velocidad.</p>
-            <button class="comprar-btn" onclick="comprar('Avión Jet Modelo A')">Comprar</button>
+            <p>Precio: $1,200,000</p>
+            <button class="comprar-btn" onclick="agregarAlCarrito('Avión Jet Modelo A', 1200000)">Agregar al carrito</button>
         </div>
         <div class="avion-item">
-            <img src="avion2.jpg" alt="Avión 2">
+            <a href="https://www.ejemplo.com/avion-comercial-modelo-b" target="_blank">
+                <img src="avion2.jpg" alt="Avión Comercial Modelo B">
+            </a>
             <h4>Avión Comercial Modelo B</h4>
             <p>Perfecto para vuelos comerciales de largo alcance.</p>
-            <button class="comprar-btn" onclick="comprar('Avión Comercial Modelo B')">Comprar</button>
+            <p>Precio: $2,500,000</p>
+            <button class="comprar-btn" onclick="agregarAlCarrito('Avión Comercial Modelo B', 2500000)">Agregar al carrito</button>
         </div>
-        <!-- Añadir más aviones aquí -->
+    </section>
+
+    <!-- Carrito de Compras -->
+    <section id="carrito">
+        <h3>Tu Carrito de Compras</h3>
+        <ul id="cart-list">
+            <!-- Aquí se mostrarán los elementos del carrito -->
+        </ul>
+        <p id="total">Total: $0</p>
+        <button class="comprar-btn" onclick="finalizarCompra()">Finalizar Compra</button>
     </section>
 
     <!-- Contacto -->
     <footer id="contacto">
         <h3>Contacto</h3>
+        <form id="contact-form" onsubmit="return validarFormulario()">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+
+            <button type="submit" class="comprar-btn">Enviar</button>
+        </form>
         <p>Email: ventas@tiendadeaviones.com</p>
         <p>Teléfono: +123-456-7890</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // script.js incluido en la misma página para facilitar
+
+        // Variables del carrito (carga inicial desde localStorage)
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        // Función para agregar un avión al carrito
+        function agregarAlCarrito(avion, precio) {
+            carrito.push({ nombre: avion, precio: precio });
+            actualizarCarrito();
+            guardarCarrito();
+        }
+
+        // Función para actualizar la visualización del carrito
+        function actualizarCarrito() {
+            const cartList = document.getElementById('cart-list');
+            const cartCount = document.getElementById('cart-count');
+            const totalElement = document.getElementById('total');
+
+            // Limpiar lista del carrito
+            cartList.innerHTML = '';
+
+            // Mostrar los elementos del carrito
+            carrito.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.nombre} - $${item.precio.toLocaleString()}`;
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Eliminar';
+                removeBtn.onclick = () => eliminarDelCarrito(index);
+                li.appendChild(removeBtn);
+                cartList.appendChild(li);
+            });
+
+            // Actualizar el contador del carrito
+            cartCount.textContent = carrito.length;
+
+            // Calcular y mostrar el total
+            const total = carrito.reduce((sum, item) => sum + item.precio, 0);
+            totalElement.textContent = `Total: $${total.toLocaleString()}`;
+        }
+
+        // Función para eliminar un elemento del carrito
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1); // Eliminar el elemento por su índice
+            actualizarCarrito(); // Actualizar el carrito
+            guardarCarrito(); // Guardar el carrito actualizado en localStorage
+        }
+
+        // Función para guardar el carrito en localStorage
+        function guardarCarrito() {
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+        }
+
+        // Función para finalizar la compra
+        function finalizarCompra() {
+            if (carrito.length === 0) {
+                alert("El carrito está vacío.");
+            } else {
+                const total = carrito.reduce((sum, item) => sum + item.precio, 0);
+                alert(`Gracias por tu compra de: ${carrito.map(item => item.nombre).join(', ')} por un total de $${total.toLocaleString()}`);
+                carrito = []; // Vaciar el carrito después de la compra
+                actualizarCarrito();
+                guardarCarrito(); // Limpiar el localStorage
+            }
+        }
+
+        // Validación básica del formulario
+        function validarFormulario() {
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const mensaje = document.getElementById('mensaje').value;
+
+            if (nombre === '' || email === '' || mensaje === '') {
+                alert("Por favor, completa todos los campos.");
+                return false;
+            }
+
+            alert("Formulario enviado correctamente.");
+            return true;
+        }
+
+        // Inicialización del carrito al cargar la página
+        document.addEventListener("DOMContentLoaded", function() {
+            actualizarCarrito();
+        });
+    </script>
 </body>
 </html>
