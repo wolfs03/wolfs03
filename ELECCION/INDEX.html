@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona una flor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #mensaje {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #ramo {
+            margin-top: 20px;
+            display: none;
+            width: 300px; /* Ajusta el tamaño de la imagen */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Elige una flor</h1>
+        <button onclick="mostrarMensaje('blanca')">Rosa Blanca</button>
+        <button onclick="mostrarMensaje('roja')">Rosa Roja</button>
+        <p id="mensaje"></p>
+        <div class="image-container">
+            <img id="ramo" src="" alt="Ramo de rosas">
+        </div>
+    </div>
+
+    <script>
+        function mostrarMensaje(color) {
+            const mensaje = document.getElementById('mensaje');
+            const ramo = document.getElementById('ramo');
+
+            if (color === 'blanca') {
+                mensaje.textContent = '"Saber lo que hay que hacer elimina el miedo". Rosa Parks.';
+                ramo.src = 'images/rosasblancas.png'; // URL de la imagen de ramo de rosas blancas
+            } else if (color === 'roja') {
+                mensaje.textContent = '"Si vas a mirar atrás, que sea para ver lo que has trabajado para llegar donde estás". Mireia Belmonte.';
+                ramo.src = 'images/rosasrojas.png'; // URL de la imagen de ramo de rosas rojas
+            }
+            ramo.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+
